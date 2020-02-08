@@ -1,0 +1,25 @@
+.container {
+  width: 100%;
+  background: radial-gradient(#50C0FF,#005CB5);
+}
+.center {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translateX(-50%) translateY(-50%);
+}
+.login-form {
+  min-width: 300px;
+  max-width: 300px;
+}
+.login-form-button {
+  width: 100%;
+}
+.ant-btn-primary {
+  background-color: #187DE4!important;
+  border-color: #187DE7 !important;
+}
+.ant-btn-primary:hover {
+  background-color: rgb(21, 21, 163) !important;
+  border-color:  #187DE7 !important;
+}

@@ -1,0 +1,16 @@
+{
+  "id": "1624454",
+  "name": "test",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "2923224",
+      "name": "leasing cloud_考勤配置",
+      "font_class": "leasingcloud_kaoqinpeizhi",
+      "unicode": "e8a5",
+      "unicode_decimal": 59557
+    }
+  ]
+}
