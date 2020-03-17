@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 export default class Updatenick extends Component {
   render() {
     return (
-      <div style={{ color: '#000' }}>
+      <div className='containers'>
         xiugainicheng
       </div>
     )

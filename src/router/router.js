@@ -2,24 +2,29 @@ import React from 'react';
 import {
   Router,
   Switch,
-  Route,
-  Redirect
+  Route
 } from "react-router-dom";
-import history from '../components/common/history';
+import history from '../common/history';
 import Login from '../page/login/index'
 import Layout from './../components/layout/index';
+import Private from './../components/private/index';
 import NoMatch from '../page/nomatch/nomatch'
 
 const BasicRoute = () => (
   <Router history={history}>
     <Switch>
+      <Route exact path="/">
+        <Private />
+      </Route>
       <Route path="/layout">
         <Layout />
       </Route>
-      <Route path="/login">
+      <Route exact path="/layout/home">
+        <Private />
+      </Route>
+      <Route exact path="/login">
         <Login />
       </Route>
-      <Redirect to="/login" />
       <Route>
         <NoMatch />
       </Route>

@@ -1,16 +1,17 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { Component } from 'react'
-import './index.css'
+import { Redirect } from 'react-router-dom'
+import './index.less'
 import '../../components/layout/font/iconfont.css'
-import { Form, Icon, Input, Button, message } from 'antd';
+import { Form, Icon, Input, Button, message } from 'antd'
 import Request from '../../http'
-import history from '../../components/common/history';
+import history from '../../common/history'
+import { getCookie, setCookie } from '../../common/cookie'
 
 interface Bowerheight{
   height: number
 }
 class Login extends Component<any, Bowerheight> {
-  state={
+  state = {
     height: 0
   }
   componentDidMount() {
@@ -20,11 +21,10 @@ class Login extends Component<any, Bowerheight> {
       height: h
     })
   }
-  async test(values: object) {
+  async login(values: object) {
     const res = await Request.post('/login', values)
     if (res.data.code === 200) {
-      localStorage.setItem('account', res.data.account)
-      console.log(this.props)
+      setCookie('account', res.data.account);
       history.push({pathname:'/layout/home'});
       message.success('登录成功');
     } else {
@@ -33,17 +33,20 @@ class Login extends Component<any, Bowerheight> {
   }
   handleSubmit = (e: any): void => {
     e.preventDefault();
-    console.log(this.props.form)
     this.props.form.validateFields((err: any, values: any) => {
       if (!err) {
-        console.log('Received values of form: ', values);
-        this.test(values)
+        this.login(values)
       }
     });
   };
   render() {
     const { getFieldDecorator } = this.props.form;
     const h = this.state.height
+    if (getCookie("account") && getCookie("account") !== "undefined") {
+      return <Redirect to="/layout/home"/>
+    } else {
+      console.log()
+    }
     return (
       <div className='container' style={{height: h}}>
         <div className='center'>

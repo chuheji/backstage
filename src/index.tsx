@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+import './index.less';
 import BasicRoute from './router/router'
 import * as serviceWorker from './serviceWorker';
 import 'antd/dist/antd.css'

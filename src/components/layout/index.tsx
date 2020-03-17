@@ -4,7 +4,8 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link
+  Link,
+  Redirect
 } from "react-router-dom";
 import './font/iconfont.css'
 import './index.less'
@@ -14,6 +15,9 @@ import Askholiday from '../../page/askholiday/index'
 import Accountlist from '../../page/accountlist/index'
 import Updatepwd from '../../page/updatepwd/index'
 import Updatenick from '../../page/updatenick/index'
+import history from '../../common/history'
+import { getCookie, removeCookie } from '../../common/cookie'
+
 const { SubMenu } = Menu;
 class Layout extends Component<any, any> {
   constructor(props: any) {
@@ -31,8 +35,19 @@ class Layout extends Component<any, any> {
     console.log(Route)
   }
 
+  logout() {
+    removeCookie('account')
+    history.push('/login')
+  }
+
   render() {
     const h = this.state.height
+    let name: string
+    if (!getCookie("account") || getCookie("account") === "undefined") {
+      return <Redirect to="/login"/>
+    } else {
+      name = getCookie("account");
+    }
     return (
       <Router>
         <div style={{ width: 256, height: h, backgroundColor: '#001529' }}>
@@ -102,27 +117,27 @@ class Layout extends Component<any, any> {
               </Menu.Item>
             </SubMenu>
             <div className='clearfix' style={{ position: 'fixed', left: 0, bottom: 0, height: 18, fontSize:16, cursor: 'pointer', backgroundColor: '#000' }}>
-              <div className='name'><Icon type="poweroff" /><span className='poweroff'>退出</span></div>
-              <div className='logout'><Icon type="poweroff" /><span className='poweroff'>退出</span></div>
+              <div className='name'><span className='poweroff'>{ name || '未登录' }</span></div>
+              <div className='logout' onClick={ this.logout }><span className='poweroff'><Icon type="poweroff" />退出</span></div>
             </div>
-            <div style={{ position: 'absolute', left: 256, top: 10 }}>
+            <div style={{ position: 'absolute', left: 256, top: 0, right: 0, bottom: 0, backgroundColor: '#161938' }}>
               <Switch>
                 <Route exact path="/layout/home">
                   <Home />
                 </Route>
-                <Route path="/layout/attendance">
+                <Route exact path="/layout/attendance">
                   <Attendance />
                 </Route>
-                <Route path="/layout/askholiday">
+                <Route exact path="/layout/askholiday">
                   <Askholiday />
                 </Route>
-                <Route path="/layout/accountlist">
+                <Route exact path="/layout/accountlist">
                   <Accountlist />
                 </Route>
-                <Route path="/layout/updatepwd">
+                <Route exact path="/layout/updatepwd">
                   <Updatepwd />
                 </Route>
-                <Route path="/layout/updatenick">
+                <Route exact path="/layout/updatenick">
                   <Updatenick />
                 </Route>
               </Switch>
