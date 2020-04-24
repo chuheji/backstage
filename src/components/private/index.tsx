@@ -7,7 +7,7 @@ export default class Private extends Component {
     return (
       setCookie("account")===null?
       <Redirect to="/login"/>:
-      <Redirect to="/layout"/>
+      <Redirect to="/layout/home"/>
 )
   }
 }

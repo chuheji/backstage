@@ -1,3 +1,8 @@
+/*
+ * @Author: 刘佑祥
+ * @LastEditors: 刘佑祥
+ * @LastEditTime: 2020-04-24 16:58:29
+ */
 var express = require('express');
 var router = express.Router();
 const connection = require('./conn')
@@ -9,7 +14,7 @@ connection.connect(() => {
 })
 // 登录
 router.post('/login', (req, res) => {
-  // console.log(req.body)
+  console.log(req.body)
   let { account, password } = req.body
   // 定义sql语句
   let loginsql = `select * from backstageuser where account='${account}' and password='${md5(password, key)}'`
@@ -19,7 +24,7 @@ router.post('/login', (req, res) => {
       throw err
     } else {
       if (!data.length) {
-        res.send({msg: '用户不存在'})
+        res.send({msg: '用户名或密码错误'})
       } else {
         res.send({account:data[0].account, msg: '登录成功', code: 200})
       }
@@ -35,7 +40,6 @@ router.post('/rightpwd', (req, res) => {
       res.send({msg: '请求失败了'})
       throw err
     } else {
-      console.log(data)
       if (!data.length) {
         res.send({code: 250, msg: '旧密码错误', data})
       } else {
@@ -56,7 +60,7 @@ router.post('/upwd', function (req, res, next) {
     }
   })
 })
-// 查询班级系别考勤信息
+// 查询班级系别请假信息
 router.post('/holiday', function (req, res, next) {
   let { department, classes  } = req.body
   let selectsql = `select * from askforholiday where department='${department}' and classes='${classes}'`
@@ -65,7 +69,6 @@ router.post('/holiday', function (req, res, next) {
       res.send({msg: '请求失败了'})
       throw err
     } else {
-      console.log(data)
       if (!data.length) {
         res.send({code: 250, msg: '错误', data})
       } else {
@@ -74,6 +77,178 @@ router.post('/holiday', function (req, res, next) {
     }
   })
 })
-
+// 查询班级系别已签到信息
+router.post('/setuped', function (req, res, next) {
+  let { department, classes  } = req.body
+  let selectsql = `select * from setuped where department='${department}' and classes='${classes}'`
+  connection.query(selectsql, function (err, data) {
+    if (err) {
+      res.send({msg: '请求失败了'})
+      throw err
+    } else {
+      if (!data.length) {
+        res.send({code: 250, msg: '错误', data})
+      } else {
+        res.send({code: 200, msg: '正确', data})
+      }
+    }
+  })
+})
+// 查询已签到信息
+router.get('/allsetuped', function (req, res, next) {
+    let selectsql = `select * from setuped`
+    connection.query(selectsql, function (err, data) {
+      if (err) {
+        res.send({msg: '请求失败了'})
+        throw err
+      } else {
+        if (!data.length) {
+          res.send({code: 250, msg: '错误', data})
+        } else {
+          res.send({code: 200, msg: '正确', data})
+        }
+      }
+    })
+  })
+  // 查询所有请假信息
+router.get('/allholiday', function (req, res, next) {
+    let selectsql = `select * from askforholiday`
+    connection.query(selectsql, function (err, data) {
+      if (err) {
+        res.send({msg: '请求失败了'})
+        throw err
+      } else {
+        if (!data.length) {
+          res.send({code: 250, msg: '错误', data})
+        } else {
+          res.send({code: 200, msg: '正确', data})
+        }
+      }
+    })
+  })
+// 查询签到信息
+router.get('/setup', function (req, res, next) {
+    let selectsql = `select * from setup`
+    connection.query(selectsql, function (err, data) {
+      if (err) {
+        res.send({msg: '请求失败了'})
+        throw err
+      } else {
+        if (!data.length) {
+          res.send({code: 250, msg: '错误', data})
+        } else {
+          res.send({code: 200, msg: '正确', data})
+        }
+      }
+    })
+  })
+  // 查询签到信息
+router.get('/late', function (req, res, next) {
+    let selectsql = `select * from setuped where attend = '迟到'`
+    connection.query(selectsql, function (err, data) {
+      if (err) {
+        res.send({msg: '请求失败了'})
+        throw err
+      } else {
+        if (!data.length) {
+          res.send({code: 250, msg: '无数据', data})
+        } else {
+          res.send({code: 200, msg: '正确', data})
+        }
+      }
+    })
+  })
+  // 查询前台账号信息
+router.get('/allaccount', function (req, res, next) {
+    let selectsql = `select * from custom`
+    connection.query(selectsql, function (err, data) {
+      if (err) {
+        res.send({msg: '请求失败了'})
+        throw err
+      } else {
+        if (!data.length) {
+          res.send({code: 250, msg: '错误', data})
+        } else {
+          res.send({code: 200, msg: '正确', data})
+        }
+      }
+    })
+  })
+  // 查询前台是否已存在账号
+router.post('/stageexist', function (req, res, next) {
+    let { account, type } = req.body
+    let selectsql = `select * from custom where account = '${account}' and type = '${type}'`
+    connection.query(selectsql, function (err, data) {
+      if (err) {
+        res.send({msg: '请求失败了'})
+        throw err
+      } else {
+        if (!data.length) {
+          res.send({code: 200, msg: '不存在'})
+        } else {
+          res.send({code: 250, msg: '存在'})
+        }
+      }
+    })
+  })
+// 查询后台是否已存在账号
+router.post('/exist', function (req, res, next) {
+    let { account } = req.body
+    let selectsql = `select * from backstageuser where account = '${account}'`
+    connection.query(selectsql, function (err, data) {
+      if (err) {
+        res.send({msg: '请求失败了'})
+        throw err
+      } else {
+        if (!data.length) {
+          res.send({code: 200, msg: '不存在'})
+        } else {
+          res.send({code: 250, msg: '存在'})
+        }
+      }
+    })
+  })
+    // 查询后台账号信息
+router.get('/backstageaccount', function (req, res, next) {
+    let selectsql = `select * from backstageuser`
+    connection.query(selectsql, function (err, data) {
+      if (err) {
+        res.send({msg: '请求失败了'})
+        throw err
+      } else {
+        if (!data.length) {
+          res.send({code: 250, msg: '错误', data})
+        } else {
+          res.send({code: 200, msg: '正确', data})
+        }
+      }
+    })
+  })
+// 添加前台用户
+  router.post('/addcustom', (req, res) => {
+    let { account, nickname, type, department, classes } = req.body
+    let addsql = `INSERT INTO custom(account,password,nickname,type,department,classes) VALUES(?,?,?,?,?,?)`
+    let addSqlParams = [`${account}`, `${md5(account, key)}`, `${nickname}`, `${type}`, `${department}`, `${classes}`]
+    connection.query(addsql, addSqlParams, (err, data) => {
+      if (err) {
+        throw err
+      } else {
+        res.send({code: 200, msg: '添加成功', data})
+      }
+    })
+  })
+  // 添加后台用户
+  router.post('/addbackstage', (req, res) => {
+    let { account, password } = req.body
+    let addsql = `INSERT INTO backstageuser(account,password) VALUES(?,?)`
+    let addSqlParams = [`${account}`, `${md5(password, key)}`]
+    connection.query(addsql, addSqlParams, (err, data) => {
+      if (err) {
+        throw err
+      } else {
+        res.send({code: 200, msg: '添加成功', data})
+      }
+    })
+  })
 
 module.exports = router;

@@ -2,8 +2,8 @@
 /*
  * @Author: 刘佑祥
  * @LastEditors: 刘佑祥
- * @LastEditTime: 2020-04-22 14:29:39
- * @Describtion: 签到总览
+ * @LastEditTime: 2020-04-22 16:11:21
+ * @Describtion: 考勤异常
  */
 import React, { Component } from 'react'
 import { Table, Input } from 'antd'
@@ -16,11 +16,6 @@ const columns = [
         key: '1',
         title: '学号',
         dataIndex: 'account',
-    },
-    {
-        key: '7',
-        title: '姓名',
-        dataIndex: 'nickname',
     },
     {
         key: '2',
@@ -48,18 +43,51 @@ const columns = [
         dataIndex: 'classes'
     },
 ];
-export default class Attendance extends Component {
+export default class Badattendance extends Component<any> {
     state = {
+        setup: [],
+        setuped: [],
         data: []
     }
     componentDidMount () {
-        Request.get('/allsetuped').then((res: any) => {
+        // Request.get('/allsetuped').then((res: any) => {
+        //     let temp = res.data.data
+        //     for (let i = 0; i < temp.length; i++) {
+        //         delete temp[i].startTime
+        //         delete temp[i].endTime
+        //         delete temp[i].attendTime
+        //         delete temp[i].geo
+        //         delete temp[i].name
+        //     }
+        //     console.log(temp)
+        //     this.setState({
+        //         setuped: temp
+        //     })
+        // })
+        Request.get('/setup').then((res: any) => {
             let temp = res.data.data
+            // console.log(temp)
             for (let i = 0; i < temp.length; i++) {
-                temp[i].key = i.toString()
+                delete temp[i].startTime
+                delete temp[i].endTime
+                delete temp[i].lng
+                delete temp[i].lat
+                delete temp[i].name
+                delete temp[i].geo
+                delete temp[i].account
+                delete temp[i].prenum
+                delete temp[i].id
+                if (temp[i].dcns && temp[i].dcns !== null) {
+                    temp[i].dcns = JSON.parse(temp[i].dcns)
+                }
+                if (temp[i].dcns === null) {
+                    console.log(temp[i])
+                    temp.splice(i,1)
+                }
             }
+            console.log(temp)
             this.setState({
-                data: temp
+                setup: temp
             })
         })
     }

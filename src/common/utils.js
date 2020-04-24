@@ -1,3 +1,8 @@
+/*
+ * @Author: 刘佑祥
+ * @LastEditors: 刘佑祥
+ * @LastEditTime: 2020-04-15 14:11:05
+ */
 const isArray = (arr) => {
   return Object.prototype.toString.call(arr) === '[object Array]';  
 }
@@ -14,7 +19,35 @@ const deepClone = (obj) => {
   } 
   return o;
 }
+// 获取今天年月日
+const getNowDate = () => {
+    let year = new Date().getFullYear()
+    let month = new Date().getMonth() + 1 < 10 ? `0${new Date().getMonth() + 1}` : new Date().getMonth() + 1
+    let day = new Date().getDate() < 10 ? `0${new Date().getDate()}` : new Date().getDate()
+    return `${year}-${month}-${day}`
+}
+// 获取昨天年月日
+const getYesterDate = () => {
+    let year = new Date().getFullYear()
+    let month = (new Date().getMonth() + 1) < 10 ? `0${new Date().getMonth() + 1}` : new Date().getMonth() + 1
+    let day = (new Date().getDate() - 1) < 10 ? `0${new Date().getDate() - 1}` : new Date().getDate() - 1
+    return `${year}-${month}-${day}`
+}
+// 获取一周内时间
+const getWeekDate = () => {
+    let res = []
+    let year = new Date().getFullYear()
+    let month = (new Date().getMonth() + 1) < 10 ? `0${new Date().getMonth() + 1}` : new Date().getMonth() + 1
+    for (let i = 6; i>=0; i--) {
+        let day = (new Date().getDate() - i) < 10 ? `0${new Date().getDate() - i}` : new Date().getDate() - i
+        res.push(`${year}-${month}-${day}`)
+    }
+    return res
+}
 export {
   isArray,
-  deepClone
+  deepClone,
+  getNowDate,
+  getYesterDate,
+  getWeekDate
 }

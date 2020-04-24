@@ -2,8 +2,8 @@
 /*
  * @Author: 刘佑祥
  * @LastEditors: 刘佑祥
- * @LastEditTime: 2020-04-22 14:29:39
- * @Describtion: 签到总览
+ * @LastEditTime: 2020-04-23 14:14:21
+ * @Describtion: 迟到详情
  */
 import React, { Component } from 'react'
 import { Table, Input } from 'antd'
@@ -28,16 +28,6 @@ const columns = [
         dataIndex: 'name'
     },
     {
-        key: '3',
-        title: '签到时间',
-        dataIndex: 'attendTime'
-    },
-    {
-        key: '4',
-        title: '签到码',
-        dataIndex: 'code'
-    },
-    {
         key: '5',
         title: '系别',
         dataIndex: 'department'
@@ -47,13 +37,18 @@ const columns = [
         title: '班级',
         dataIndex: 'classes'
     },
+    {
+        key: '8',
+        title: '状态',
+        dataIndex: 'attend'
+    }
 ];
-export default class Attendance extends Component {
+export default class Late extends Component {
     state = {
         data: []
     }
     componentDidMount () {
-        Request.get('/allsetuped').then((res: any) => {
+        Request.get('/late').then((res: any) => {
             let temp = res.data.data
             for (let i = 0; i < temp.length; i++) {
                 temp[i].key = i.toString()
@@ -64,7 +59,7 @@ export default class Attendance extends Component {
         })
     }
     handleSearch = (value: string): any => {
-        Request.get('/allsetuped').then((res: any) => {
+        Request.get('/late').then((res: any) => {
             let temp = res.data.data
             let data: any = []
             for (let i = 0; i < temp.length; i++) {

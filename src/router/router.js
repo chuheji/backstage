@@ -1,3 +1,8 @@
+/*
+ * @Author: 刘佑祥
+ * @LastEditors: 刘佑祥
+ * @LastEditTime: 2020-04-20 23:21:55
+ */
 import React from 'react';
 import {
   Router,
@@ -20,6 +25,18 @@ const BasicRoute = () => (
         <Layout />
       </Route>
       <Route exact path="/layout/home">
+        <Private />
+      </Route>
+      <Route exact path="/layout/attendance">
+        <Private />
+      </Route>
+      <Route exact path="/layout/askholiday">
+        <Private />
+      </Route>
+      <Route exact path="/layout/accountlist">
+        <Private />
+      </Route>
+      <Route exact path="/layout/updatepwd">
         <Private />
       </Route>
       <Route exact path="/login">

@@ -15,6 +15,8 @@ import Askholiday from '../../page/askholiday/index'
 import Accountlist from '../../page/accountlist/index'
 import Updatepwd from '../../page/updatepwd/index'
 import Updatenick from '../../page/updatenick/index'
+import Badattendance from '../../page/badattendance/index'
+import Late from '../../page/late/index'
 import history from '../../common/history'
 import { getCookie, removeCookie } from '../../common/cookie'
 
@@ -78,7 +80,19 @@ class Layout extends Component<any, any> {
               <Menu.Item key="5">
                 <Link to="/layout/attendance">
                   <Icon type="pie-chart" />
-                  <span>考勤总览</span>
+                  <span>签到总览</span>
+                </Link>
+              </Menu.Item>
+              <Menu.Item key="12">
+                <Link to="/layout/badattendance">
+                  <Icon type="pie-chart" />
+                  <span>缺勤详情</span>
+                </Link>
+              </Menu.Item>
+              <Menu.Item key="13">
+                <Link to="/layout/late">
+                  <Icon type="pie-chart" />
+                  <span>迟到详情</span>
                 </Link>
               </Menu.Item>
               <Menu.Item key="6">
@@ -100,13 +114,13 @@ class Layout extends Component<any, any> {
               <Menu.Item key="9">
                 <Link to="/layout/accountlist">
                   <Icon type="pie-chart" />
-                  <span>账号列表</span>
+                  <span>前台账号列表</span>
                 </Link>
               </Menu.Item>
               <Menu.Item key="10">
                 <Link to="/layout/updatenick">
                   <Icon type="pie-chart" />
-                  <span>修改昵称</span>
+                  <span>后台账号列表</span>
                 </Link>
               </Menu.Item>
               <Menu.Item key="11">
@@ -139,6 +153,12 @@ class Layout extends Component<any, any> {
                 </Route>
                 <Route exact path="/layout/updatenick">
                   <Updatenick />
+                </Route>
+                <Route exact path="/layout/badattendance">
+                  <Badattendance />
+                </Route>
+                <Route exact path="/layout/late">
+                  <Late />
                 </Route>
               </Switch>
             </div>
