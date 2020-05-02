@@ -17,6 +17,7 @@ import Updatepwd from '../../page/updatepwd/index'
 import Updatenick from '../../page/updatenick/index'
 import Badattendance from '../../page/badattendance/index'
 import Late from '../../page/late/index'
+import Allsetup from '../../page/allsetup/index'
 import history from '../../common/history'
 import { getCookie, removeCookie } from '../../common/cookie'
 
@@ -68,6 +69,12 @@ class Layout extends Component<any, any> {
                 <span>首页</span>
               </Link>
             </Menu.Item>
+            <Menu.Item key="20">
+              <Link to="/layout/allsetup">
+                <Icon type="pie-chart" />
+                <span>签到总览</span>
+              </Link>
+            </Menu.Item>
             <SubMenu
               key="sub1"
               title={
@@ -80,7 +87,7 @@ class Layout extends Component<any, any> {
               <Menu.Item key="5">
                 <Link to="/layout/attendance">
                   <Icon type="pie-chart" />
-                  <span>签到总览</span>
+                  <span>已签总览</span>
                 </Link>
               </Menu.Item>
               <Menu.Item key="12">
@@ -159,6 +166,9 @@ class Layout extends Component<any, any> {
                 </Route>
                 <Route exact path="/layout/late">
                   <Late />
+                </Route>
+                <Route exact path="/layout/allsetup">
+                  <Allsetup />
                 </Route>
               </Switch>
             </div>

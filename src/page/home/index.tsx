@@ -78,7 +78,7 @@ export default class Home extends Component<any, Istate> {
           <div>
             <b style={{marginTop: 20, marginLeft: 30, display: 'inline-block'}}>{department} · {classes}</b>
             <Search
-              placeholder="搜索格式:计算机科学与技术(一班)"
+              placeholder="搜索格式:计算机科学与技术(1601)"
               onSearch={value => this.search(value)}
               style={{ width: 270, marginLeft:15, backgroundColor: '#000' }}
             />

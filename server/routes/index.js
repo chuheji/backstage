@@ -1,7 +1,7 @@
 /*
  * @Author: 刘佑祥
  * @LastEditors: 刘佑祥
- * @LastEditTime: 2020-04-24 16:58:29
+ * @LastEditTime: 2020-05-02 16:31:27
  */
 var express = require('express');
 var router = express.Router();
@@ -250,5 +250,117 @@ router.get('/backstageaccount', function (req, res, next) {
       }
     })
   })
-
+// 删除创建的签到
+router.post('/delattend', (req, res) => {
+    let { code } = req.body
+    let delsql = `DELETE FROM setup WHERE code = ${code}`
+    connection.query(delsql, function (err, data) {
+      if (err) {
+        res.send({msg: '删除失败了'})
+        throw err
+      } else {
+        res.send({code: 200, msg: '删除成功'})
+      }
+    })
+  })
+  // 删除用户
+router.post('/delcustom', (req, res) => {
+    let { account } = req.body
+    let delsql = `DELETE FROM custom WHERE account = ${account}`
+    connection.query(delsql, function (err, data) {
+      if (err) {
+        res.send({msg: '删除失败了'})
+        throw err
+      } else {
+        res.send({code: 200, msg: '删除成功'})
+      }
+    })
+  })
+    // 重置用户密码
+router.post('/resetpwd', (req, res) => {
+    let { account } = req.body
+    connection.query('UPDATE custom SET password = (?) WHERE account = ?', [md5(account, key), account], function (err, data) {
+        if (err) {
+          res.send({ msg: '重置失败' })
+          throw err
+        } else {
+          res.send({ code: 200, msg: '重置成功' })
+        }
+      })
+  })
+      // 重置后台用户密码
+router.post('/resetbackpwd', (req, res) => {
+    let { account } = req.body
+    connection.query('UPDATE custom SET password = (?) WHERE account = ?', [md5(account, key), account], function (err, data) {
+        if (err) {
+          res.send({ msg: '重置失败' })
+          throw err
+        } else {
+          res.send({ code: 200, msg: '重置成功' })
+        }
+      })
+  })
+      // 修改用户数据
+router.post('/updatecustom', (req, res) => {
+    let { account, nickname, type, department, classes } = req.body
+    connection.query('UPDATE custom SET nickname = (?), type = (?), department = (?), classes = (?) WHERE account = ?', [nickname, type, department, classes, account], function (err, data) {
+        if (err) {
+          res.send({ msg: '修改失败' })
+          throw err
+        } else {
+          res.send({ code: 200, msg: '修改成功' })
+        }
+      })
+  })
+        // 修改后台用户数据
+router.post('/updatebackstage', (req, res) => {
+    let { account, password } = req.body
+    connection.query('UPDATE custom SET password = (?) WHERE account = ?', [md5(password,key), account], function (err, data) {
+        if (err) {
+          res.send({ msg: '修改失败' })
+          throw err
+        } else {
+          res.send({ code: 200, msg: '修改成功' })
+        }
+      })
+  })
+    // 删除签到
+router.post('/delattend', (req, res) => {
+    let { id } = req.body
+    let delsql = `DELETE FROM setuped WHERE id = ${id}`
+    connection.query(delsql, function (err, data) {
+      if (err) {
+        res.send({msg: '删除失败了'})
+        throw err
+      } else {
+        res.send({code: 200, msg: '删除成功'})
+      }
+    })
+  })
+      // 删除请假
+router.post('/delholiday', (req, res) => {
+    let { id } = req.body
+    let delsql = `DELETE FROM askforholiday WHERE id = ${id}`
+    connection.query(delsql, function (err, data) {
+      if (err) {
+        res.send({msg: '删除失败了'})
+        throw err
+      } else {
+        res.send({code: 200, msg: '删除成功'})
+      }
+    })
+  })
+        // 删除签到
+router.post('/delsetup', (req, res) => {
+    let { id } = req.body
+    let delsql = `DELETE FROM setup WHERE id = ${id}`
+    connection.query(delsql, function (err, data) {
+      if (err) {
+        res.send({msg: '删除失败了'})
+        throw err
+      } else {
+        res.send({code: 200, msg: '删除成功'})
+      }
+    })
+  })
 module.exports = router;
