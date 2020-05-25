@@ -2,7 +2,7 @@
 /*
  * @Author: 刘佑祥
  * @LastEditors: 刘佑祥
- * @LastEditTime: 2020-05-02 16:34:28
+ * @LastEditTime: 2020-05-16 00:40:48
  * @Describtion: 签到总览
  */
 import React, { Component } from 'react'
@@ -55,7 +55,7 @@ export default class Attendance extends Component {
               (
                 <div>
                 <Popconfirm title="确认删除吗?" okText="确认" cancelText="取消" onConfirm={() => this.handleDelete(record)}>
-                  <Button type='danger'>删除</Button>
+                  <Button ghost type='danger'>删除</Button>
                 </Popconfirm>
                 </div>
               )
@@ -98,7 +98,7 @@ export default class Attendance extends Component {
             // eslint-disable-next-line array-callback-return
             temp.map((item: any) => {
                 for (let i in item) {
-                    if (item[i] === value) {
+                    if (item[i] === value || item[i]+'' === value+'') {
                         data.push(item)
                     }
                 }

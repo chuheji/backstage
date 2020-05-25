@@ -148,7 +148,7 @@ class Updatepwd extends Component<any, any> {
             })(<Input.Password onBlur={this.handleConfirmBlur} />)}
           </Form.Item>
           <Form.Item {...tailFormItemLayout}>
-            <Button type="primary" htmlType="submit">
+            <Button ghost type="primary" htmlType="submit">
               提交
           </Button>
           </Form.Item>

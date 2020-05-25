@@ -1,7 +1,7 @@
 /*
  * @Author: 刘佑祥
  * @LastEditors: 刘佑祥
- * @LastEditTime: 2020-05-02 16:33:17
+ * @LastEditTime: 2020-05-18 15:12:40
  * @Describtion: 签到总览
  */
 import React, { Component } from 'react'
@@ -48,11 +48,6 @@ export default class Allsetup extends Component {
             dataIndex: 'lateTime'
         },
         {
-            key: '6',
-            title: '签到码',
-            dataIndex: 'code'
-        },
-        {
             key: '7',
             title: '总预期人数',
             dataIndex: 'prenum'
@@ -64,7 +59,7 @@ export default class Allsetup extends Component {
               (
                 <div>
                 <Popconfirm title="确认删除吗?" okText="确认" cancelText="取消" onConfirm={() => this.handleDelete(record)}>
-                  <Button type='danger'>删除</Button>
+                  <Button ghost type='danger'>删除</Button>
                 </Popconfirm>
                 </div>
               )
@@ -107,7 +102,7 @@ export default class Allsetup extends Component {
             // eslint-disable-next-line array-callback-return
             temp.map((item: any) => {
                 for (let i in item) {
-                    if (item[i] === value) {
+                    if (item[i] === value || item[i]+'' === value+'') {
                         data.push(item)
                     }
                 }

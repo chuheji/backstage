@@ -1,7 +1,7 @@
 /*
  * @Author: 刘佑祥
  * @LastEditors: 刘佑祥
- * @LastEditTime: 2020-05-02 16:31:27
+ * @LastEditTime: 2020-05-11 13:33:44
  */
 var express = require('express');
 var router = express.Router();
@@ -247,19 +247,6 @@ router.get('/backstageaccount', function (req, res, next) {
         throw err
       } else {
         res.send({code: 200, msg: '添加成功', data})
-      }
-    })
-  })
-// 删除创建的签到
-router.post('/delattend', (req, res) => {
-    let { code } = req.body
-    let delsql = `DELETE FROM setup WHERE code = ${code}`
-    connection.query(delsql, function (err, data) {
-      if (err) {
-        res.send({msg: '删除失败了'})
-        throw err
-      } else {
-        res.send({code: 200, msg: '删除成功'})
       }
     })
   })

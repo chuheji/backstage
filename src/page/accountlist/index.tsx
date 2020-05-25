@@ -2,7 +2,7 @@
 /*
  * @Author: 刘佑祥
  * @LastEditors: 刘佑祥
- * @LastEditTime: 2020-05-02 16:35:01
+ * @LastEditTime: 2020-05-16 00:39:19
  * @Describtion: 前台账号列表
  */
 import React, { Component } from 'react'
@@ -52,12 +52,12 @@ export default class Accountlist extends Component {
             render: (text: any, record: any) =>
               (
                 <div>
-                <Button className='update' type='primary' onClick={() => this.showUpdateModal(record)}>编辑</Button>
+                <Button ghost className='update' type='primary' onClick={() => this.showUpdateModal(record)}>编辑</Button>
                 <Popconfirm title="确认删除吗?" okText="确认" cancelText="取消" onConfirm={() => this.handleDelete(record)}>
-                  <Button type='danger'>删除</Button>
+                  <Button ghost type='danger'>删除</Button>
                 </Popconfirm>
-                <Popconfirm title="确认重置密码吗?" okText="确认" cancelText="取消" onConfirm={() => this.handleDelete(record)}>
-                  <Button className='reset' type='primary'>重置密码</Button>
+                <Popconfirm title="确认重置密码吗?" okText="确认" cancelText="取消" onConfirm={() => this.resetPassword(record)}>
+                  <Button ghost className='reset' type='default'>重置密码</Button>
                 </Popconfirm>
                 </div>
               )
@@ -120,11 +120,12 @@ export default class Accountlist extends Component {
             // eslint-disable-next-line array-callback-return
             temp.map((item: any) => {
                 for (let i in item) {
-                    if (item[i] === value) {
+                    if (item[i] === value || item[i]+'' === value+'') {
                         data.push(item)
                     }
                 }
             })
+            console.log(data)
             this.setState({
                 data: data
             })
@@ -331,7 +332,7 @@ export default class Accountlist extends Component {
                     style={{ width: 400, marginLeft: 10 }}
                 />
                 <Button ghost style={{marginLeft: 10}} onClick={this.showModal}>添加账号</Button>
-                <Button ghost style={{marginLeft: 10}}>批量导入账号</Button>
+                {/* <Button ghost style={{marginLeft: 10}}>批量导入账号</Button> */}
                 <Table
                     columns={this.columns}
                     dataSource={this.state.data} 

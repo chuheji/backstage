@@ -90,12 +90,6 @@ class Layout extends Component<any, any> {
                   <span>已签总览</span>
                 </Link>
               </Menu.Item>
-              <Menu.Item key="12">
-                <Link to="/layout/badattendance">
-                  <Icon type="pie-chart" />
-                  <span>缺勤详情</span>
-                </Link>
-              </Menu.Item>
               <Menu.Item key="13">
                 <Link to="/layout/late">
                   <Icon type="pie-chart" />
